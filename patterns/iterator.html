@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+	<meta charset="utf-8" />
+	<link rel="stylesheet" href="../prism.css" />
+	<title>Iterator</title>
+</head>
+
+<body>
+	<article>
+
+		<h1>Iterator</h1>
+		<p>Autor: Colin Siepe</p>
+
+		<section>
+			<img src="../img/iterator.png" alt="iterator-picture" width="300" height="250" />
+		</section>
+
+		<section>
+			<h2>Abstrakte Beschreibung</h2>
+			<p>Der Iterator ist ein Verhaltensmuster, mit dem man Sammlungen wie ArrayListen und HashMaps durchlaufen
+				kann. <br />
+				Er wird Iterator genannnt, weil "Iterieren" der Begriff für wiederholen ist.</p>
+			<h4>Vorteile</h4>
+			<ul>
+				<li>Die Schnittstelle des Aggregats wird vereinfacht, da es selbst keine Schnittstelle für den Zugriff
+					auf die Daten anbieten muss.</li>
+				<li>Es sind mehrere Traversierungen zur selben Zeit möglich, da jeder Iterator seinen eigenen
+					Traversierungszustand verwaltet.</li>
+			</ul>
+			<h4>Nachteile</h4>
+			<ul>
+				<li>Der Iterator muss damit umgehen können, wenn Daten während des Iterierungsvorgangs hinzugefügt oder
+					gelöscht werden. Dazu muss der interne Zustand des Iterators vom Aggregat angepasst werden, sobald
+					dessen interne Repräsentation geändert wird.</li>
+				<li>Ein Iterator benötigt oft priviligierten Zugriff auf die zu iterierende Datenstruktur. Dieses
+					Problem kann entweder gelöst werden, indem man den Iterator als Inner-Class des Aggregats
+					implementiert (in diesem Fall kann der Iterator dann explizit über einen Aufruf wie new
+					List.Iterator() oder polymorph über eine Fabrikmethode des Aggregats erzeugt werden), oder indem man
+					den Iterator in einer separaten Klasse implementiert, die eine Referenz auf das Aggregat beim
+					Konstruktoraufruf übergeben bekommt.</li>
+				</u>
+		</section>
+
+		<section>
+			<h2>Code Beispiel:</h2>
+			<pre class="line-numbers">
+				<code class="language-php">
+				  &lt;?php
+
+				  class AlphabeticalOrderIterator implements \Iterator
+				  {
+
+					  private $collection;
+					  private $position = 0;
+					  private $reverse = false;
+				  
+					  public function __construct($collection, $reverse = false)
+					  {
+						  $this->collection = $collection;
+						  $this->reverse = $reverse;
+					  }
+				  
+					  public function rewind()
+					  {
+						  $this->position = $this->reverse ?
+							  count($this->collection->getItems()) - 1 : 0;
+					  }
+				  
+					  public function current()
+					  {
+						  return $this->collection->getItems()[$this->position];
+					  }
+				  
+					  public function key()
+					  {
+						  return $this->position;
+					  }
+				  
+					  public function next()
+					  {
+						  $this->position = $this->position + ($this->reverse ? -1 : 1);
+					  }
+				  
+					  public function valid()
+					  {
+						  return isset($this->collection->getItems()[$this->position]);
+					  }
+				  }
+
+				  class WordsCollection implements \IteratorAggregate
+				  {
+					  private $items = [];
+				  
+					  public function getItems()
+					  {
+						  return $this->items;
+					  }
+				  
+					  public function addItem($item)
+					  {
+						  $this->items[] = $item;
+					  }
+				  
+					  public function getIterator(): Iterator
+					  {
+						  return new AlphabeticalOrderIterator($this);
+					  }
+				  
+					  public function getReverseIterator(): Iterator
+					  {
+						  return new AlphabeticalOrderIterator($this, true);
+					  }
+				  }
+				  
+				  $collection = new WordsCollection();
+				  $collection->addItem("First");
+				  $collection->addItem("Second");
+				  $collection->addItem("Third");
+				  
+				  echo "Straight traversal:\n";
+				  foreach ($collection->getIterator() as $item) {
+					  echo $item . "\n";
+				  }
+				  
+				  echo "\n";
+				  echo "Reverse traversal:\n";
+				  foreach ($collection->getReverseIterator() as $item) {
+					  echo $item . "\n";
+				  }
+				  ?&gt;
+				</code>
+			  </pre>
+			<a href="../downloads/iterator.txt" download>Code downloaden</a>
+		</section>
+
+		<section>
+			<h2>Result:</h2>
+			<pre>
+				<code>
+					Straight traversal:
+					First
+					Second
+					Third
+					
+					Reverse traversal:
+					Third
+					Second
+					First
+				  </code>
+			</pre>
+		</section>
+
+		<section>
+			<h2>Konkrete Beschreibung</h2>
+			<p>
+				Das Verhaltensmuster "Iterator", ist eines der meist verwendeten Entwurfsmuster überhaupt.
+				Es dient dazu sequentiell auf eine Datenstruktur (Aggregat) zuzugreifen, ohne das dazu deren interne
+				Repräsentation offen gelegt werden muss. Das dazugehörige Klassendiagramm ist im Folgenden dargestellt:
+			</p>
+			<a>
+				<img src="../img/Iterator-Klassendiagramm.png" alt="iterator-class-picture" width="300" height="250" />
+			</a>
+			<p>
+				Das Interface "Aggregate" muss dabei von Datenstrukturen (in diesem Beispiel eine Liste) implementiert
+				werden, die Iteratoren anbieten sollen, und definiert eine einzelne Methode, die einen solchen Iterator
+				zurückgibt. Das Interface "Iterator" defniert die Schnittstelle, die von einer Iterator-Implementierung,
+				von der es für jeden Datenstrukturtyp jeweils eine geben wird, implementiert werden muss. Die in diesem
+				Beispiel definierte Schnittstelle stellt nur die mindestens nötigen Funktionen bereit, es wären noch
+				viele weitere denkbar. Jede Datenstruktur, die das "Aggregate"-Interface implementiert, liefert beim
+				Aufruf der iterator()-Methode eine Instanz auf einen, zur Datenstruktur passenden, Iterator, wie es in
+				dem Code-Fragment angedeutet ist.
+			</p>
+		</section>
+
+		<section>
+			<h5>Quellenangaben</h5>
+			<table>
+				<thead>
+					<tr>
+						<th>Name</th>
+						<th>Datum</th>
+						<th>Link</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>Refactoring Guru</td>
+						<td>2021-09-09</td>
+						<td>
+							<a
+								href="https://refactoring.guru/design-patterns">https://refactoring.guru/design-patterns</a>
+						</td>
+					</tr>
+					<tr>
+						<td>netz.kinder</td>
+						<td>2021-09-09</td>
+						<td>
+							<a href="http://netzkinder.blogspot.com">http://netzkinder.blogspot.com</a>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</section>
+	</article>
+	<script src="../prism.js"></script>
+</body>
+
+</html>
