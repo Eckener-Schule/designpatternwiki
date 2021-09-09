@@ -148,29 +148,29 @@
             <pre class="line-numbers">
 				<code class="language-php">
                     &lt;?php
-
+                                    
                     class Facade
                     {
                         protected $annihilator;
 
-                        protected $exekutor;
+                        protected $annihilator2;
 
                         public function __construct(
                             Annihilator $annihilator = null,
-                            Exekutor $exekutor = null
+                            Annihilator2 $annihilator2 = null
                         ) {
                             $this->annihilator = $annihilator ?: new Annihilator();
-                            $this->exekutor = $exekutor ?: new Exekutor();
+                            $this->annihilator2 = $annihilator2 ?: new Annihilator2();
                         }
 
                         public function operation(): string
                         {
                             $result = "Imperium initialisiert Feuergefecht:\n";
                             $result .= $this->annihilator->operation1();
-                            $result .= $this->exekutor->operation1();
+                            $result .= $this->annihilator2->operation1();
                             $result .= "Imperium befiehlt zu feuern:\n";
                             $result .= $this->annihilator->operationN();
-                            $result .= $this->exekutor->operationZ();
+                            $result .= $this->annihilator2->operationZ();
 
                             return $result;
                         }
@@ -180,29 +180,29 @@
                     {
                         public function operation1(): string
                         {
-                            return "Annihilator an Exekutor: machen sie sich bereit für das Feuergefecht, zwei Rebellenkreuzer nähern sich unserer Position!\n";
+                            return "Annihilator Kommandant: Waffenabteilung, machen sie die Waffen startklar für das Feuergefecht, zwei Rebellenkreuzer nähern sich unserer Position!\n";
                         }
 
                         // ...
 
                         public function operationN(): string
                         {
-                            return "Annihilator an Exekutor: Sie sind angekommen, feuern sie auf die Rebellenkreuzer!\n";
+                            return "Annihilator Kommandant: Sie sind angekommen, feuern sie auf die Rebellenkreuzer!\n";
                         }
                     }
 
-                    class Exekutor
+                    class Annihilator2
                     {
                         public function operation1(): string
                         {
-                            return "Exekutor an Annihilator: Verstanden! Sind in Kampfposition und bereit für das Feuergefecht!\n";
+                            return "Annihilator Waffenabteilung: Verstanden! Waffen sind geladen und bereit für das Feuergefecht!\n";
                         }
 
                         // ...
 
                         public function operationZ(): string
                         {
-                            return "Exekutor: FEUER!\n";
+                            return "Annhilator Waffenabteilung: FEUER!\n";
                         }
                     }
 
@@ -216,8 +216,8 @@
                     }
 
                     $annihilator = new Annihilator();
-                    $exekutor = new Exekutor();
-                    $facade = new Facade($annihilator, $exekutor);
+                    $annihilator2 = new Annihilator2();
+                    $facade = new Facade($annihilator, $annihilator2);
                     clientCode($facade);
 
                     ?&gt;
