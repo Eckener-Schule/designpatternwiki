@@ -1,81 +1,254 @@
 <!DOCTYPE html>
 <html lang="de">
-	<head>
-		<meta charset="utf-8"/>
-		<title>Decorator Pattern</title>
-	</head>
-	<body>
-		<article>
+<head>
+    <meta charset="utf-8"/>
+    <title>Decorator Pattern</title>
+    <link rel="stylesheet" href="../prism.css" />
+</head>
+<body>
+<article>
 
-			<h1>Decorator Pattern</h1>
-			<p>Autor:Maximilian Joksch</p>
+    <h1>Decorator Pattern</h1>
+    <p>Autor:Maximilian Joksch</p>
 
-			<section>
-				<img src="public/img/test_img.png" alt="factory-method-picture" />
-			</section>
+    <section>
+        <img src="../img/decorator.svg" alt="factory-method-picture"/>
+    </section>
 
-			<section>
-				<h2>Abstrakte Beschreibung</h2>
-				<h4>Vorteile</h4>
-				<ul>
-					<li>Dies ist ein nicht so langer Text, um den Platz auszufüllen</li>
-					<li>Dies ist ein nicht so langer Text, um den Platz auszufüllen</li>
-					<li>Dies ist ein nicht so langer Text, um den Platz auszufüllen</li>
-				</ul>
-				<h4>Nachteile</h4>
-				<ul>
-					<li>Dies ist ein nicht so langer Text, um den Platz auszufüllen</li>
-					<li>Dies ist ein nicht so langer Text, um den Platz auszufüllen</li>
-					<li>Dies ist ein nicht so langer Text, um den Platz auszufüllen</li>
-				</ul>
-				<pre>
-					<code>
+    <section>
+        <h2>Abstrakte Beschreibung</h2>
+        <p>Das Decorator Design Pattern ermöglicht das dynamische Hinzufügen von Fähigkeiten zu einer Klasse. Dazu wird
+            die Klasse, dessen Verhalten wir erweitern möchten (Component, Komponente), mit anderen Klassen (Decorator,
+            Dekorierer) dekoriert (vgl. engl. "to wrap": umhüllen). Das heißt der Decorator umschließt (enthält) die
+            Component. Der Decorator ist vom selben Typ wie das zudekorierende Objekt, hat somit die gleiche
+            Schnittstelle und kann an der selben Stelle wie die Component benutzt werden. Er delegiert Methodenaufrufe
+            an seine Component weiter und führt sein eigenes Verhalten davor oder danach aus.</p>
+        <p>Eine Component kann mit beliebig vielen Decorators dekoriert werden, um so seine Fähigkeiten immer weiter
+            auszubauen.</p>
+        <p>Realisiert wird das Pattern beginnend mit einer abstrakten Superklasse (oder einem Interface) Component.
+            Sowohl die konkreten Components als auch alle Decorators sind von diesem Typ. Component definiert weiterhin
+            beliebig viele abstrakte Methoden, die alle konkreten Subklassen implementieren müssen (hier operate()). Die
+            konkreten Components erweitern Component direkt und implementieren ihr Basisverhalten. Die abstrakte Klasse
+            Decorator erweitert Component ebenfalls und hält zugleich eine Referenz auf ein (beliebiges) Objekt vom Typ
+            Component. Konkrete Decorators erweitern schließlich Decorator (sind damit auch Components) und
+            implementieren ihr Zusatzverhalten (operate()). Darin rufen sie zum einen die Methode(n) (operate()) der
+            Component (geerbt von Decorator) auf und fügen davor oder danach ihr decoratorspezifisches Verhalten hinzu.
+            Da es keine Rolle spielt, ob ihre Componentreferenz nun eine konkrete Component oder wiederum ein anderer
+            Decorator ist, können Decorators beliebig geschachtelt werden.</p>
+        <h4>Vorteile</h4>
+        <ul>
+            <li><strong>Dynamik und Flexibilität.</strong> Klassen können auch zu Laufzeit um Verhalten erweitert
+                werden. Es sind beliebige Kombinationen von Dekoratoren möglich.
+            </li>
+            <li><strong>Transparenz.</strong> Einem Client, der mit einer Component arbeitet, kann eine dekorierte
+                Component "untergeschoben" werden, ohne dass sein Code bricht. Der Client wird wiederverwendbar.
+            </li>
+            <li><strong>Performance.</strong> Man muss nur jene Funktionalitäten initialisieren, die auch wirklich
+                benötigt werden.Einmal initialisiert, steht die Funktionalität stets zur Verfügung. Dies ist ein großer
+                Vorteil gegenüber einer komplexen Basisklasse, die alle möglichen Funktionen permanent bereit hält.
+            </li>
+            <li><strong>Wartbarkeit durch schlanke, kohäsive Klassen.</strong> Dank Decorator Pattern können
+                überfrachtete unübersichtliche Basisklassen vermieden werden. Jeder Decorator repräsentiert genau eine
+                Funktion und nichts anderes. Kohäsion bedeutet, wie gut eine Programmeinheit eine logische Aufgabe oder
+                Einheit abbildet. In einem System mit starker Kohäsion ist jede Programmeinheit verantwortlich für genau
+                eine wohldefinierte Aufgabe oder Einheit.
+            </li>
+            <li>Vermeidung von langen unübersichtlichen Vererbungshierarchien.</li>
+        </ul>
+        <h4>Nachteile</h4>
+        <ul>
+            <li><strong>Erschwerte Fehlerfindung.</strong> Fehler, die sich in den oft langen Aufrufketten von
+                dekorierten Objekten verstecken, sind schwer zu finden.
+            </li>
+            <li><strong>Hohe Objektanazhl.</strong> Jedes zusätzliche Feature bedarf eines neuen Decoratorobjektes.
+                Schnell kann die Anzahl der vielen kleinen, ähnlichen Objekten und ihr Initialisierungscode
+                unübersichtlich werden. Eine Factory empfiehlt sich, um den Erstellungscode zu kapseln.
+            </li>
+            <li><strong>Unkomfortable, wortreiche API.</strong> Die entstandene Decorator-API, die der Client nutzen
+                muss, um ein Objekt nach seinen Wünschen zu dekorieren, ist nicht einsteigerfreundlich, besonders, wenn
+                das Know-How über das Decorator Pattern fehlt. Jeder, der die Programmiersprache Java gelernt hat und
+                das erste Mal von der Java-IO-API samt unzähligen schachtelbaren Streams, Readern und Writern erschlagen
+                wurde, kann dieses Problem nachvollziehen. Die Komplexität von Systemen steigt mit der Einführung des
+                Decorator Patterns.
+            </li>
+            <li><strong>Keine Objektidentität</strong> zwischen Component und dekorierte Component. Obwohl der Client
+                einen Decorator, der eine Component umhüllt, genauso behandelt wie eine undekorierte Component, handelt
+                es sich dabei nicht um die gleichen Objekte. Clients die auf Objektidentität setzen, werden Fehler
+                erzeugen.
+            </li>
+        </ul>
+        <p>
+            Component: <br>
+            <pre class="line-numbers">
+	            <code class="language-php">
 						&lt;?php
-						phpinfo();
-						echo 'Hallo Moin';
+						abstract class Component {
+							protected abstract function operate();
+						}
 						?&gt;
 					</code>
 				</pre>
-				<a href="#">Code downloaden</a>
-			</section>
+        </p>
+        <p>
+            ConcreteComponentA und ConcreteComponentB: <br>
+            <pre class="line-numbers">
+	            <code class="language-php">
+                    &lt;?php
+                    public class ConcreteComponentA extends Component {
+                        public function operate(){
+                            echo 'ConcreteComponentA operates.';
+                        }
+                    }
 
-			<section>
-				<h2>Konkrete Beschreibung</h2>
-				<p>
-					Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Nam liber tempor cum soluta nobis eleifend option congue nihil imperdiet doming id quod mazim placerat facer possim assum.
-				</p>
-				<a href="#">Code downloaden</a>
-			</section>
+                    class ConcreteComponentB extends Component {
+                        public function operate(){
+                            echo 'ConcreteComponentB operates.';
+                        }
+                    }
+                    ?&gt;
+                </code>
+            </pre>
+        </p>
+        <p>
+            Decorator: <br>
+            <pre class="line-numbers">
+                <code class="language-php">
+                    &lt;?php
+                    abstract class Decorator extends Component {
+                        protected $component;
 
-			<section>	
-				<h5>Quellenangaben</h5>
-					<table>
-						<thead>
-							<tr>
-								<th>Name</th>
-								<th>Datum</th>
-								<th>Link</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr>
-								<td>Wikipedia</td>
-								<td>2021-07-30</td>
-								<td><a href="https://de.wikipedia.org/wiki/Fabrikmethode" target="_blank">https://de.wikipedia.org/wiki/Fabrikmethode</a></td>
-							</tr>
-							<tr>
-								<td>Philipp Hauer</td>
-								<td>2021-08-26</td>
-								<td><a href="https://www.philipphauer.de/study/se/design-pattern/decorator.php" target="_blank">https://www.philipphauer.de/study/se/design-pattern/factory-method.php</a></td>
-							</tr>
-							<tr>
-								<td>Ionos</td>
-								<td>2021-08-26</td>
-								<td><a href="https://www.ionos.de/digitalguide/websites/web-entwicklung/was-ist-das-factory-pattern/" target="_blank">https://www.ionos.de/digitalguide/websites/web-entwicklung/was-ist-das-factory-pattern/</a></td>
-							</tr>
-						</tbody>
-					</table>
-			</section>
-		</article>
-	</body>
+                        public function __construct($component){
+                            $this->component = $component;
+                        }
+                    }
+                    ?&gt;
+                </code>
+            </pre>
+        </p>
+        <p>
+            ConcreteDecorator1, ConcreteDecorator2 und ConcreteDecorator3: <br>
+            <pre class="line-numbers">
+                <code class="language-php">
+						&lt;?php
+						public class ConcreteDecorator1 extends Decorator {
+							public __construct($component){
+                                parent::$component;
+                            }
+
+                            public function operate(){
+                                $component->operate();
+                                echo 'ConcreteDecorator1 operates!';
+                            }
+						}
+
+                        public class ConcreteDecorator2 extends Decorator {
+                            private int $newState;
+
+							public __construct($component){
+                                parent::$component;
+                                $newState = 999;
+                            }
+
+                            public function operate(){
+                                $component->operate();
+                                echo 'ConcreteDecorator2 operates with a new State: '.$newState;
+                            }
+						}
+
+                        public class ConcreteDecorator3 extends Decorator {
+							public __construct($component){
+                                parent::$component;
+                            }
+
+                            public function operate(){
+                                $component->operate();
+                                echo 'ConcreteDecorator1 operates with new Operation: '.newOperation();
+                            }
+
+                            public function newOperation() {
+                                echo rand()*20;
+                            }
+						}
+						?&gt;
+					</code>
+				</pre>
+        </p>
+        <p>
+            Beispielclient: <br>
+            <pre class="line-numbers">
+	            <code class="language-php">
+						&lt;?php
+						define ('BASEPATH', realpath(dirname(__FILE__)));
+                        require_once ('autoload.php');
+
+                        $compA = new ConcreteComponentA();
+                        $compA->operate();
+
+                        $compA = new Concrete Decorator1($compA);
+                        compA->operate();
+
+                        $compB = new ConcreteDecorator3(new ConcreteDecorator2(new ConcreteComponentB()));
+                        $compB->operate();
+						?&gt;
+					</code>
+				</pre>
+        </p>
+        <a href="#">Code downloaden</a>
+    </section>
+
+    <section>
+        <h2>Konkrete Beschreibung</h2>
+        <p>
+            Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet
+            dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper
+            suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in
+            vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero et accumsan et
+            iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla
+            facilisi. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt
+            ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation
+            ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in
+            hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero et
+            accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait
+            nulla facilisi. Nam liber tempor cum soluta nobis eleifend option congue nihil imperdiet doming id quod
+            mazim placerat facer possim assum.
+        </p>
+        <a href="#">Code downloaden</a>
+    </section>
+
+    <section>
+        <h5>Quellenangaben</h5>
+        <table>
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Datum</th>
+                <th>Link</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>Wikipedia</td>
+                <td>2021-07-30</td>
+                <td><a href="https://de.wikipedia.org/wiki/Fabrikmethode" target="_blank">https://de.wikipedia.org/wiki/Fabrikmethode</a>
+                </td>
+            </tr>
+            <tr>
+                <td>Philipp Hauer</td>
+                <td>2021-08-26</td>
+                <td><a href="https://www.philipphauer.de/study/se/design-pattern/decorator.php" target="_blank">https://www.philipphauer.de/study/se/design-pattern/factory-method.php</a>
+                </td>
+            </tr>
+            <tr>
+                <td>Ionos</td>
+                <td>2021-08-26</td>
+                <td><a href="https://www.ionos.de/digitalguide/websites/web-entwicklung/was-ist-das-factory-pattern/"
+                       target="_blank">https://www.ionos.de/digitalguide/websites/web-entwicklung/was-ist-das-factory-pattern/</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </section>
+</article>
+<script src="../prism.js"></script>
+</body>
 </html>
