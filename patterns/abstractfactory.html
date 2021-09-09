@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8"/>
+    <link rel="stylesheet" href="../prism.css" />
+    <title>Abstract Factory</title>
+  </head>
+  <body>
+    <h1>Abstract factory design pattern</h1>
+    <p>Autor: ARTP@IT-B3-19</p>
+
+    <section>
+      <img src="../img/beschreibung-kldia.svg" alt="abstract-factory-picture" width="500px" hieght="500px" />
+    </section>
+
+    <section>
+      <h3>Vorteile</h3>
+      <ul>
+	<li>Durch das Abschirmen der konkreten Klassen wird der Clientcode allgemeingültig. Es ist kein Code für spezielle Fälle notwendig.</li>
+	<li>Konsistenz. Es wird sichergestellt, dass nur jene Objekte zum Client gelangen, die auch zusammenpassen. Es ist weiterhin gewährleistet, dass immer nur ein konkretes Familienmitglied eines Typs zur gleichen Zeit im Einsatz ist.</li>
+	<li>Flexibilität. Ganze Objektfamilien können ausgetaucht werden, ohne dass der Clientcode bricht, da sich der Client nur auf Abstraktionen (Abstract Factory, Productschnittstellen) stützt.</li>
+	<li>Einfache Erweiterung mit neuen Produktfamilien. Neue Productsets können sehr einfach ins System integriert werden. Dazu ist lediglich das erneute Implementieren der Factoryschnittstelle nötig. Anschließend muss nur noch an einer zentralen Stelle im Client die neue Factory instanziiert werden.</li>
+	<li>Wiederverwendbarkeit. Konkrete Products können Mitglieder verschiedener Produktfamilien sein.</li>
+	<li>Verschlankung des Clientcodes.</li>
+      </ul>
+      <h3>Nachteile</h3>
+      <ul>
+	<li>Unflexibilität hinsichtlich neuer Familienmitglieder. Soll der Produktfamilie ein neues Produkt hinzugefügt werden, so ist eine Änderung der Schnittstelle der Abstract Factory notwendig. Dies führt aber zum Brechen von Code aller konkreten Factorys. Der Änderungsaufwand ist groß. Daher sollte gleich zu Beginn sehr genau überlegt werden, welche Produkttypen erstellt werden sollen. Je weiter das System zum Zeitpunkt der nötigen Erweiterung fortgeschritten ist, umso mehr Code muss modifiziert werden.</li>
+      </ul>
+    </section>
+
+    <article>
+      <h2>Abstrakte Beschreibung</h2>
+      <section>
+	<p>Das Abstract Factory Design Pattern dient der Definition einer zusammenhängenden Familie aus Produkten (engl. products). Die Familien können elegant ausgetauscht werden.</p>
+	<p>Der Instanziierungscode wird in eine Factory ausgelagert. Allerdings wird die Factory hinter einer abstrakten Schnittstelle vor dem Client verborgen. Diese Factoryschnittstelle, die namensgebende Abstract Factory, definiert für jedes Produkt der Produktfamilie (Produktsatz) eine Operation, mit der der Client eine Instanz des jeweiligen Produkts erhalten kann. Der Client ist damit von einer bestimmten Factoryimplementierung entkoppelt. Es stützt sich allein auf Abstraktion - sowohl bei den Produkten als auch bei der Factory.</p>
+	<p>Da eine Factory immer die gesamte Schnittstelle erfüllen muss, wird sicher gestellt, dass der Client nur mit Produkten arbeitet, die zusammen gehören und zusammen passen.</p>
+	<p>Es wird eine Schnittstelle für die Factory und die Products definiert (hier mit den Interfaces AbstractFactory, IProduct1 etc.). Konkrete Factorys (ConcreteFactoryA, ConcreteFactoryB) realisieren die Schnittstelle der AbstractFactory und implementieren die Erstellungsmethoden. In dieser instanziiert die Factory ihre eigene Implementierung des jeweiligen Produkts und gibt sie zurück. Der Client kennt nur die Schnittstellen.</p>
+      </section>
+      <section>
+	<pre class="line-numbers">
+	  <code class="language-php">
+	    &lt?php
+	    interface AbstractFactory
+	    {
+	      public function createProduct1 ();
+	      public function createProduct2 ();
+	      public function createProduct3 ();
+	    }
+
+	    class ConcreteFactoryA implements AbstractFactory
+	    {
+	      public function createProduct1 ()
+	      {
+	        return new ConcreteProduct1A;
+	      }
+	    
+	      public function createProduct2 ()
+	      {
+	        return new ConcreteProduct2A;
+	      }
+	    
+	      public function createProduct3 ()
+	      {
+	        return new ConcreteProduct3A;
+	      }
+	    }
+	    
+	    class ConcreteFactoryB implements AbstractFactory
+	    {
+	      public function createProduct1 ()
+	      {
+	        return new ConcreteProduct1B;
+	      }
+	    
+	      public function createProduct2 ()
+	      {
+	        return new ConcreteProduct2B;
+	      }
+	    
+	      public function createProduct3 ()
+	      {
+	        return new ConcreteProduct3B;
+	      }
+	    }
+	    ?&gt
+	  </code>
+	</pre>
+	<a href="../downloads/abstractfactory_abstract-example.php" download>Beispielcode downloaden</a>
+      </section>
+    </article>
+    
+    <article>
+      <h2>Konkrete Beschreibung</h2>
+      <section>
+	<p>Platz für konkrete Beschreibung...</p>
+      </section>
+      <section>
+	<pre class="line-numbers">
+	  <code class="language-php">
+	    &lt?php
+	    ?&gt
+	  </code>
+	</pre>
+	<a href="#">Code downloaden</a>
+      </section>
+    </article>
+    
+    <section>	
+      <h5>Quellenangaben</h5>
+      <table>
+	<thead>
+	  <tr>
+	    <th>Name</th>
+	    <th>Datum</th>
+	    <th>Link</th>
+	  </tr>
+	</thead>
+	<tbody>
+	  <tr>
+	    <td>Philipp Hauer</td>
+	    <td>2021-08-26</td>
+	    <td><a href="https://www.philipphauer.de/study/se/design-pattern/abstract-factory.php">https://www.philipphauer.de/study/se/design-pattern/abstract-factory.php</a></td>
+	  </tr>
+	</tbody>
+      </table>
+    </section>
+    <script src="../prism.js"></script>
+  </body>
+</html>
