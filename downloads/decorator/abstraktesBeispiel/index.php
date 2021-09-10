@@ -2,14 +2,14 @@
 define ('BASEPATH', realpath(dirname(__FILE__)));
 require_once ('autoload.php');
 
-$compA = new ConcreteComponentA();
-$compA->operate();
+$compA = new B1();
+$compA->produce();
 echo '<br>';
 echo '<br>';
-$compA = new ConcreteDecorator1($compA);
-$compA->operate();
+$compA = new Blaster($compA);
+$compA->produce();
 echo '<br>';
 echo '<br>';
-$compB = new ConcreteDecorator3(new ConcreteDecorator2(new ConcreteComponentB()));
-$compB->operate();
+$compB = new Kommunikationsmodul(new Jetpack(new B2()));
+$compB->produce();
 echo '<br>';
