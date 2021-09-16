@@ -1,6 +1,6 @@
 <?php
 class BX implements Droide {
     public function produce(){
-        echo 'BX-Kommandodroide wurde hergestellt.<br>';
+        echo '<span id="d">BX-Kommandodroide </span>';
     }
 }

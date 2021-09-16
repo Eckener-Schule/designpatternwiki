@@ -1,6 +1,6 @@
 <?php
 class B2 implements Droide {
     public function produce(){
-        echo 'B2-Superkampfdroide wurde hergestellt. *Roger Roger*<br>';
+        echo '<span id="d">B2-Superkampfdroide </span>';
     }
 }
