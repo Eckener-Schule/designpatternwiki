@@ -2,34 +2,38 @@
 <html lang="de">
 	<head>
 		<meta charset="utf-8"/>
-		<title>Decorator Pattern</title>
+		<title>Memento Method</title>
+		<link href="../prism.css" rel="stylesheet" />
 	</head>
 	<body>
 		<article>
 
-			<h1>Decorator Pattern</h1>
-			<p>Autor:Maximilian Joksch</p>
+			<h1>Memento Method</h1>
+			<p>Autor:IT-B2-19</p>
 
 			<section>
-				<img src="public/img/test_img.png" alt="factory-method-picture" />
+				<img src="../img/memento_pattern.png" alt="memento-method-picture" />
+			</section>
+
+			<section>
+				<h2>Definition / Kurzbeschreibung</h2>
+				<p>
+					Das Memento Design Pattern erlaubt es, den Zustand eines Objektes zu speichern und später wiederherzustellen, ohne dabei die Kapselung des Objektes zu verletzen.
+				</p>
 			</section>
 
 			<section>
 				<h2>Abstrakte Beschreibung</h2>
 				<h4>Vorteile</h4>
 				<ul>
-					<li>Dies ist ein nicht so langer Text, um den Platz auszufüllen</li>
-					<li>Dies ist ein nicht so langer Text, um den Platz auszufüllen</li>
-					<li>Dies ist ein nicht so langer Text, um den Platz auszufüllen</li>
+					<li>Der interne Zustand eines Objekts kann extern gespeichert werden, ohne die Kapselung zu verletzen. </li>
 				</ul>
 				<h4>Nachteile</h4>
 				<ul>
-					<li>Dies ist ein nicht so langer Text, um den Platz auszufüllen</li>
-					<li>Dies ist ein nicht so langer Text, um den Platz auszufüllen</li>
-					<li>Dies ist ein nicht so langer Text, um den Platz auszufüllen</li>
+					<li>Das Erstellen einer großen Anzahl von Mementos mit großen Datenmengen kann sich auf die Speichernutzung und die Systemleistung auswirken.</li>
 				</ul>
-				<pre>
-					<code>
+				<pre class="line-numbers">
+					<code class="language-php">
 						&lt;?php
 						phpinfo();
 						echo 'Hallo Moin';
@@ -44,6 +48,14 @@
 				<p>
 					Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Nam liber tempor cum soluta nobis eleifend option congue nihil imperdiet doming id quod mazim placerat facer possim assum.
 				</p>
+				<pre class="line-numbers">
+					<code class="language-php">
+						&lt;?php
+						phpinfo();
+						echo 'Hallo Moin';
+						?&gt;
+					</code>
+				</pre>
 				<a href="#">Code downloaden</a>
 			</section>
 
@@ -59,23 +71,20 @@
 						</thead>
 						<tbody>
 							<tr>
-								<td>Wikipedia</td>
-								<td>2021-07-30</td>
-								<td><a href="https://de.wikipedia.org/wiki/Fabrikmethode" target="_blank">https://de.wikipedia.org/wiki/Fabrikmethode</a></td>
+								<td>GofPatterns</td>
+								<td>2021-09-09</td>
+								<td><a href="https://www.gofpatterns.com/behavioral/patterns/memento-pattern.php">https://www.gofpatterns.com/behavioral/patterns/memento-pattern.php</a></td>
 							</tr>
-							<tr>
-								<td>Philipp Hauer</td>
-								<td>2021-08-26</td>
-								<td><a href="https://www.philipphauer.de/study/se/design-pattern/decorator.php" target="_blank">https://www.philipphauer.de/study/se/design-pattern/factory-method.php</a></td>
-							</tr>
+
 							<tr>
 								<td>Ionos</td>
 								<td>2021-08-26</td>
-								<td><a href="https://www.ionos.de/digitalguide/websites/web-entwicklung/was-ist-das-factory-pattern/" target="_blank">https://www.ionos.de/digitalguide/websites/web-entwicklung/was-ist-das-factory-pattern/</a></td>
+								<td><a href="https://www.ionos.de/digitalguide/websites/web-entwicklung/was-ist-das-factory-pattern/">https://www.ionos.de/digitalguide/websites/web-entwicklung/was-ist-das-factory-pattern/</a></td>
 							</tr>
 						</tbody>
 					</table>
 			</section>
 		</article>
+		<script src="../prism.js"></script>
 	</body>
 </html>

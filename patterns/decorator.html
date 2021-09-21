@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="utf-8"/>
+    <title>Decorator Pattern</title>
+    <link rel="stylesheet" href="../prism.css"/>
+</head>
+<body>
+<article>
+
+    <h1>Decorator Pattern</h1>
+    <p>Autor: Maximilian Joksch</p>
+
+    <section>
+        <h2>Definition</h2>
+        <p>Das Decorator Design Pattern, kurz Decorator Pattern (dt. Decorator-Muster), ist eine 1994 veröffentlichte
+            Musterstrategie für die übersichtliche Erweiterung von Klassen in objektorientierter Computersoftware. Nach
+            dem Muster lässt sich jedes beliebige Objekt um ein gewünschtes Verhalten ergänzen, ohne dabei das Verhalten
+            anderer Objekte derselben Klasse zu beeinflussen.</p>
+    </section>
+
+    <section>
+        <img src="../img/decorator.svg" alt="factory-method-picture"/>
+    </section>
+
+    <section>
+        <h2>Abstrakte Beschreibung</h2>
+        <p>Das Decorator Design Pattern ermöglicht das dynamische Hinzufügen von Fähigkeiten zu einer Klasse. Dazu wird
+            die Klasse, dessen Verhalten wir erweitern möchten (Component, Komponente), mit anderen Klassen (Decorator,
+            Dekorierer) dekoriert (vgl. engl. "to wrap": umhüllen). Das heißt der Dekorierer umschließt (enthält) die
+            Komponente. Der Dekorierer ist vom selben Typ wie das zu dekorierende Objekt, hat somit die gleiche
+            Schnittstelle und kann an der selben Stelle wie die Komponente benutzt werden. Er delegiert Methodenaufrufe
+            an seine Komponente weiter und führt sein eigenes Verhalten davor oder danach aus.</p>
+        <p>Eine Komponente kann mit beliebig vielen Dekorieren dekoriert werden, um so seine Fähigkeiten immer weiter
+            auszubauen.</p>
+        <p>Realisiert wird das Pattern beginnend mit einer Schnittstelle (oder einer Eltern Klasse) "Component".
+            Sowohl die konkreten Komponenten als auch alle Dekorierer sind von diesem Typ. "Component" definiert
+            weiterhin
+            beliebig viele abstrakte Methoden, die alle konkreten Subklassen implementieren müssen (hier operate()). Die
+            konkreten Komponenten erweitern "Component" direkt und implementieren ihr Basisverhalten. Die abstrakte
+            Klasse
+            "Decorator" erweitert "Component" ebenfalls und hält zugleich eine Referenz auf ein (beliebiges) Objekt vom
+            Typ
+            "Component". Konkrete Dekorierer erweitern schließlich "Decorator" (sind damit auch Komponenten) und
+            implementieren ihr Zusatzverhalten (operate()). Darin rufen sie zum einen die Methode(n) (operate()) der
+            Komponente (geerbt von "Decorator") auf und fügen davor oder danach ihr dekorier-spezifisches Verhalten
+            hinzu.
+            Da es keine Rolle spielt, ob ihre Komponentenreferenz nun eine konkrete Komponente oder wiederum ein anderer
+            Dekorierer ist, können Dekorierer beliebig geschachtelt werden.</p>
+        <h4>Vorteile</h4>
+        <ul>
+            <li><strong>Dynamik und Flexibilität.</strong> Klassen können auch zu Laufzeit um Verhalten erweitert
+                werden. Es sind beliebige Kombinationen von Dekorierern möglich.
+            </li>
+            <li><strong>Transparenz.</strong> Einem Klienten, der mit einer Komponente arbeitet, kann eine dekorierte
+                Komponente "untergeschoben" werden, ohne dass sein Code bricht. Der Klient wird wiederverwendbar.
+            </li>
+            <li><strong>Performance.</strong> Man muss nur jene Funktionalitäten initialisieren, die auch wirklich
+                benötigt werden.Einmal initialisiert, steht die Funktionalität stets zur Verfügung. Dies ist ein großer
+                Vorteil gegenüber einer komplexen Basisklasse, die alle möglichen Funktionen permanent bereit hält.
+            </li>
+            <li><strong>Wartbarkeit durch schlanke, kohäsive Klassen.</strong> Dank Decorator Pattern können
+                überfrachtete unübersichtliche Basisklassen vermieden werden. Jeder Dekorierer repräsentiert genau eine
+                Funktion und nichts anderes. Kohäsion bedeutet, wie gut eine Programmeinheit eine logische Aufgabe oder
+                Einheit abbildet. In einem System mit starker Kohäsion ist jede Programmeinheit verantwortlich für genau
+                eine wohldefinierte Aufgabe oder Einheit.
+            </li>
+            <li>Vermeidung von langen unübersichtlichen Vererbungshierarchien.</li>
+        </ul>
+        <h4>Nachteile</h4>
+        <ul>
+            <li><strong>Erschwerte Fehlerfindung.</strong> Fehler, die sich in den oft langen Aufrufketten von
+                dekorierten Objekten verstecken, sind schwer zu finden.
+            </li>
+            <li><strong>Hohe Objektanazhl.</strong> Jedes zusätzliche Funktion bedarf eines neuen Dekoriererobjektes.
+                Schnell kann die Anzahl der vielen kleinen, ähnlichen Objekten und ihr Initialisierungscode
+                unübersichtlich werden. Eine Factory empfiehlt sich, um den Erstellungscode zu kapseln.
+            </li>
+            <li><strong>Unkomfortable, wortreiche API.</strong> Die entstandene Dekorierer-API, die der Klient nutzen
+                muss, um ein Objekt nach seinen Wünschen zu dekorieren, ist nicht einsteigerfreundlich, besonders, wenn
+                das Know-How über das Decorator Pattern fehlt. Jeder, der die Programmiersprache Java gelernt hat und
+                das erste Mal von der Java-IO-API samt unzähligen schachtelbaren Streams, Readern und Writern erschlagen
+                wurde, kann dieses Problem nachvollziehen. Die Komplexität von Systemen steigt mit der Einführung des
+                Decorator Patterns.
+            </li>
+            <li><strong>Keine Objektidentität</strong> zwischen Komponenten und dekorierten Komponenten. Obwohl der
+                Klient
+                einen Dekorierer, der eine Komponente umhüllt, genauso behandelt wie eine undekorierte Komponente,
+                handelt
+                es sich dabei nicht um die gleichen Objekte. Klienten die auf Objektidentität setzen, werden Fehler
+                erzeugen.
+            </li>
+        </ul>
+        <details>
+            <summary>Component:</summary>
+            <pre class="line-numbers">
+	            <code class="language-php">
+                    &lt;?php
+                    interface Component{
+                        public function operate();
+                    }
+                    ?&gt;
+                </code>
+            </pre>
+        </details>
+        <details>
+            <summary>ConcreteComponentA und ConcreteComponentB:</summary>
+            <pre class="line-numbers">
+	            <code class="language-php">
+                    &lt;?php
+                    class ConcreteComponentA implements Component {
+                        public function operate(){
+                            echo 'ConcreteComponentA operates. <br>';
+                        }
+                    }
+
+                    class ConcreteComponentB implements Component {
+                        public function operate(){
+                            echo 'ConcreteComponentB operates.<br>';
+                        }
+                    }
+                    ?&gt;
+                </code>
+            </pre>
+        </details>
+        <details>
+            <summary>Decorator:</summary>
+            <pre class="line-numbers">
+                <code class="language-php">
+                    &lt;?php
+                    abstract class Decorator extends Component {
+                        protected $component;
+
+                        public function __construct($component){
+                            $this->component = $component;
+                        }
+                    }
+                    ?&gt;
+                </code>
+            </pre>
+        </details>
+        <details>
+            <summary>ConcreteDecorator1, ConcreteDecorator2 und ConcreteDecorator3:</summary>
+            <pre class="line-numbers">
+                <code class="language-php">
+                    &lt;?php
+                    class ConcreteDecorator1 extends Decorator {
+                        public function operate(){
+                            $this->component->operate();
+                            echo 'ConcreteDecorator1 operates!<br>';
+                        }
+                    }
+
+                    class ConcreteDecorator2 extends Decorator {
+                        public int $newState = 999;
+
+                        public function operate(){
+                            $this->component->operate();
+                            echo 'ConcreteDecorator2 operates with a new State: '.$this->newState.'<br>';
+                        }
+                    }
+
+                    class ConcreteDecorator3 extends Decorator {
+                        public function operate(){
+                            $this->component->operate();
+                            echo 'ConcreteDecorator1 operates with new Operation: '.$this->newOperation().'<br>';
+                        }
+
+                        public function newOperation(): int{
+                            return rand()*20;
+                        }
+                    }
+                    ?&gt;
+                </code>
+            </pre>
+        </details>
+        <details>
+            <summary>Beispielklient:</summary>
+            <pre class="line-numbers">
+	            <code class="language-php">
+                    &lt;?php
+                    $compA = new ConcreteComponentA();
+                    $compA->operate();
+                    echo '<br>';
+                    echo '<br>';
+                    $compA = new ConcreteDecorator1($compA);
+                    $compA->operate();
+                    echo '<br>';
+                    echo '<br>';
+                    $compB = new ConcreteDecorator3(new ConcreteDecorator2(new ConcreteComponentB()));
+                    $compB->operate();
+                    echo '<br>';
+                    ?&gt;
+                </code>
+            </pre>
+        </details>
+        <a href="../downloads/decorator/abstraktesBeispiel/abstraktesBeispiel.zip">Code downloaden</a>
+    </section>
+
+    <section>
+        <h2>Konkrete Beschreibung</h2>
+        <p>
+            Als nächstes schauen wir uns ein konkretes Beispiel an. Dazu reisen wir zurück in der Zeit und weit weit weg
+            in eine entfernte Galaxie. In dieser Galaxie heerscht Krieg zwischen den Klonen und Droiden. Um den Krieg zu
+            gewinnen brauch es vor allem eins, Droiden. Diese werden auf dem Planeten Metalorn hergestellt. Dabei gibt
+            es verschiedene Varianten von Droiden mit unterschiedlichen Ausstattungen.
+        </p>
+        <p>
+            Unsere Komponenten in diesem Beispiel sind die Doiden. Es gibt B1-Kampfdroiden, B2-Kampfdroiden,
+            B3-Ultrakampfdroiden und BX-Kommandodroiden. Diese Droiden können unterschiedliche Ausstattungen, welche
+            beliebig kombiniert werden kann. Zu den Ausstattungen gehören Blaster, Jetpacks, Schilde und
+            Kommunikationsmodule.
+            Damit man nun nicht für jeden Droiden mit jeder möglichen Konfiguration eine eigene Klasse erstellen muss,
+            machen wir uns das Decorator Pattern zu nutze.
+        </p>
+        <p>
+            Als Schnittstelle für die Komponenten erstellen wir uns eine übergreifende Schnittstelle Droide. Die
+            konkreten Komponenten sind dann die Klassen B1, B2, B3 und BX. Diese Komponenten wollen wir nun mit unseren
+            verschiedenen Austattungen Dekorieren. Dazu erstellen wir eine abstrakte Klasse Austattungen, welche um die
+            Klassen Blaster, Jetpack, Kommunikationsmodul und Schild erweitert wird und alles aus der Schnittstelle
+            Droide erbt. Jede Klasse hat die die Methode produce(), um den jeweiligen Droiden oder die jeweilige
+            Ausstattung herzustellen.
+        </p>
+        <details>
+            <summary>Droide:</summary>
+            <pre class="line-numbers">
+	            <code class="language-php">
+                    &lt;?php
+                    interface Droide{
+                        public function produce();
+                    }
+
+                    ?>;
+                </code>
+            </pre>
+        </details>
+        <details>
+            <summary>B1, B2, B3, BX:</summary>
+            <pre class="line-numbers">
+	            <code class="language-php">
+                    &lt;?php
+                    class B1 implements Droide {
+                        public function produce(){
+                            echo 'B1-Kampfdroide wurde hergestellt. *Roger Roger*<br>';
+                        }
+                    }
+
+                    class B2 implements Droide {
+                        public function produce(){
+                            echo 'B2-Superkampfdroide wurde hergestellt. *Roger Roger*<br>';
+                        }
+                    }
+
+                    class B3 implements Droide {
+                        public function produce(){
+                            echo 'B3-Ultrakampfdroide wurde hergestellt.<br>';
+                        }
+                    }
+
+                    class BX implements Droide {
+                        public function produce(){
+                            echo 'BX-Kommandodroide wurde hergestellt.<br>';
+                        }
+                    }
+                    ?&gt;
+                </code>
+            </pre>
+        </details>
+        <details>
+            <summary>Ausstattung:</summary>
+            <pre class="line-numbers">
+                <code class="language-php">
+                    &lt;?php
+                    abstract class Ausstattung implements Droide {
+                        protected $droide;
+
+                        public function __construct(Droide $droide){
+                            $this->droide = $droide;
+                        }
+                    }
+                    ?&gt;
+                </code>
+            </pre>
+        </details>
+        <details>
+            <summary>Blaster, Jetpacks, Kommunikationsmodul, Schild:</summary>
+            <pre class="line-numbers">
+                <code class="language-php">
+                    &lt;?php
+                    class Blaster extends Ausstattung {
+
+                        public function produce(){
+                            $this->droide->produce();
+                            echo 'Blaster wurde hinzugefügt *pew pew*<br>';
+                        }
+                    }
+
+                    class Jetpack extends Ausstattung {
+
+                        public function produce(){
+                            $this->droide->produce();
+                            echo 'Jetpack wurde hinzugefügt. <br>';
+                        }
+                    }
+
+                    class Kommunikationsmodul extends Ausstattung {
+
+                        public function produce(){
+                            $this->droide->produce();
+                            echo 'Kommunikationsmodul wurde hinzugefügt. <br>';
+                        }
+                    }
+
+                    class Schild extends Ausstattung {
+
+                        public function produce(){
+                            $this->droide->produce();
+                            echo 'Schild wurde hinzugefügt.<br>';
+                        }
+                    }
+                    ?&gt;
+                </code>
+            </pre>
+        </details>
+        <details>
+            <summary>Fertigungsanalage:</summary>
+            <pre class="line-numbers">
+	            <code class="language-php">
+                    &lt;?php
+                    $B1Droide = new B1();
+                    $B1Droide->produce();
+                    echo '<br>';
+                    echo '<br>';
+                    $B1Droide = new Blaster($B1Droide);
+                    $B1Droide->produce();
+                    echo '<br>';
+                    echo '<br>';
+                    $B2Droide = new Blaster(new Jetpack(new B2()));
+                    $B2Droide->produce();
+                    echo '<br>';
+                    echo '<br>';
+                    $B3Droide = new Schild(new Blaster(new B3));
+                    $B3Droide->produce();
+                    echo '<br>';
+                    echo '<br>';
+                    $BXDroide = new Kommunikationsmodul(new Jetpack(new BX));
+                    $BXDroide->produce();
+                    ?&gt;
+                </code>
+            </pre>
+        </details>
+        <a href="../downloads/decorator/konkretesBeispiel/konkretesBeispiel.zip">Code downloaden</a>
+    </section>
+
+    <section>
+        <h5>Quellenangaben</h5>
+        <table>
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Datum</th>
+                <th>Link</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>Wikipedia</td>
+                <td>2021-09-10</td>
+                <td>
+                    <a href="https://de.wikipedia.org/wiki/Decorator#:~:text=Der%20Decorator%20(auch%20Dekorierer)%20ist,um%20zus%C3%A4tzliche%20Funktionalit%C3%A4ten%20zu%20erweitern."
+                       target="_blank">https://de.wikipedia.org/wiki/Decorator</a>
+                </td>
+            </tr>
+            <tr>
+                <td>Philipp Hauer</td>
+                <td>2021-09-10</td>
+                <td><a href="https://www.philipphauer.de/study/se/design-pattern/decorator.php" target="_blank">https://www.philipphauer.de/study/se/design-pattern/decorator.php</a>
+                </td>
+            </tr>
+            <tr>
+                <td>Ionos</td>
+                <td>2021-09-10</td>
+                <td><a href="https://www.ionos.de/digitalguide/websites/web-entwicklung/was-ist-das-decorator-pattern/"
+                       target="_blank">https://www.ionos.de/digitalguide/websites/web-entwicklung/was-ist-das-decorator-pattern/</a>
+                </td>
+            </tr>
+            <tr>
+                <td>Refactoring Guru</td>
+                <td>2021-09-10</td>
+                <td><a href="https://refactoring.guru/design-patterns/decorator"
+                       target="_blank">https://refactoring.guru/design-patterns/decorator</a>
+                </td>
+            </tr>
+            <tr>
+                <td>Jedipedia</td>
+                <td>2021-09-10</td>
+                <td><a href="https://jedipedia.fandom.com/wiki/Jedipedia:Hauptseite"
+                       target="_blank">https://jedipedia.fandom.com/wiki/Jedipedia:Hauptseite</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </section>
+</article>
+<script src="../prism.js"></script>
+</body>
+</html>

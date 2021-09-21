@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="utf-8" />
+    <title>Facade Design Pattern</title>
+    <link rel="stylesheet" href="../prism.css" />
+</head>
+
+<body>
+    <article>
+
+        <h1>Facade Design Pattern</h1>
+        <p>Autor: Shawn Jess</p>
+
+        <section>
+            <img src="../img/facade.png" alt="facade-designpattern-picture" />
+            <ul>
+                <p>Facade</p>
+                <li>Die Fassade. Sie verweist auf die Klassen Class1, Class2 und Class3.</li>
+                <p>Clients</p>
+                <li>Die Objekte welche die Fassade nutzen.</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Abstrakte Beschreibung</h2>
+            <p>Facade ist ein strukturelles Entwurfsmuster, das eine vereinfachte Schnittstelle zu einer Bibliothek, einem Framework
+            oder einem anderen komplexen Satz von Klassen bietet.</p>
+            <h2>Abstraktes Beispiel</h2>
+            <p>Dieses Beispiel veranschaulicht die Struktur des Facade Design Patterns und konzentriert sich auf die folgenden Fragen:</p>
+            <ul>
+                <li>Aus welchen Klassen besteht es?</li>
+                <li>Welche Rollen spielen diese Klassen?</li>
+                <li>Auf welche Weise sind die Elemente des Musters miteinander verbunden?</li>
+            </ul>
+            <h3>index.php</h3>
+            <pre class="line-numbers">
+				<code class="language-php">
+                    &lt;?php
+
+                    class Facade
+                    {
+                    protected $subsystem1;
+
+                    protected $subsystem2;
+
+                    public function __construct(
+                    Subsystem1 $subsystem1 = null,
+                    Subsystem2 $subsystem2 = null
+                    ) {
+                    $this->subsystem1 = $subsystem1 ?: new Subsystem1();
+                    $this->subsystem2 = $subsystem2 ?: new Subsystem2();
+                    }
+
+                    public function operation(): string
+                    {
+                    $result = "Facade initialisiert Subsysteme:\n";
+                    $result .= $this->subsystem1->operation1();
+                    $result .= $this->subsystem2->operation1();
+                    $result .= "Facade beauftragt Subsysteme mit der Durchführung der Aktion:\n";
+                    $result .= $this->subsystem1->operationN();
+                    $result .= $this->subsystem2->operationZ();
+
+                    return $result;
+                    }
+                    }
+
+                    class Subsystem1
+                    {
+                    public function operation1(): string
+                    {
+                    return "Subsystem1: bereit machen!\n";
+                    }
+
+                    // ...
+
+                    public function operationN(): string
+                    {
+                    return "Subsystem1: Los!\n";
+                    }
+                    }
+
+                    class Subsystem2
+                    {
+                    public function operation1(): string
+                    {
+                    return "Subsystem2: bereit!\n";
+                    }
+
+                    // ...
+
+                    public function operationZ(): string
+                    {
+                    return "Subsystem2: initialisieren!\n";
+                    }
+                    }
+
+                    function clientCode(Facade $facade)
+                    {
+                    // ...
+
+                    echo $facade->operation();
+
+                    // ...
+                    }
+
+                    $subsystem1 = new Subsystem1();
+                    $subsystem2 = new Subsystem2();
+                    $facade = new Facade($subsystem1, $subsystem2);
+                    clientCode($facade);
+
+                    ?&gt;
+            	</code>
+            </pre>
+            <h3>Output</h3>
+            <pre>
+                <code>
+                    Facade initializes subsystems:
+                    Subsystem1: Ready!
+                    Subsystem2: Get ready!
+                    Facade orders subsystems to perform the action:
+                    Subsystem1: Go!
+                    Subsystem2: Fire!
+                </code>
+            </pre>
+            <h2>Vorteile</h2>
+            <ul>
+                <li>Minimiert die Komplexität von Subsystemen</li>
+                <li>Fördert das Prinzip der losen Kopplung</li>
+                <li>Software wird flexibler und leichter erweiterbar</li>
+            </ul>
+            <h2>Nachteile</h2>
+            <ul>
+                <li>Implementierung aufwändig (insbesondere bei bereits bestehendem Code)</li>
+                <li>Ansatz ist an eine zusätzliche Indirektionsstufe gekoppelt</li>
+                <li>Hoher Abhängigkeitsgrad von der Facade-Schnittstelle</li>
+            </ul>
+            <a href="../downloads/index.php" download>Code downloaden</a>
+        </section>
+
+        <section>
+            <h2>Konkrete Beschreibung(Star Wars)</h2>
+            <p>Hier kommt eine Beschreibung</p>
+            <h2>Konkretes Beispiel(Star Wars)</h2>
+            <p>Dieses Beispiel veranschaulicht die Struktur des Facade Design Patterns anhand eines Weltraumkampfes zwischen dem Imperium und der Rebellen.</p>
+            <h3>index.php</h3>
+            <pre class="line-numbers">
+				<code class="language-php">
+                    &lt;?php
+                                    
+                    class Facade
+                    {
+                        protected $annihilator;
+
+                        protected $annihilator2;
+
+                        public function __construct(
+                            Annihilator $annihilator = null,
+                            Annihilator2 $annihilator2 = null
+                        ) {
+                            $this->annihilator = $annihilator ?: new Annihilator();
+                            $this->annihilator2 = $annihilator2 ?: new Annihilator2();
+                        }
+
+                        public function operation(): string
+                        {
+                            $result = "Imperium initialisiert Feuergefecht:\n";
+                            $result .= $this->annihilator->operation1();
+                            $result .= $this->annihilator2->operation1();
+                            $result .= "Imperium befiehlt zu feuern:\n";
+                            $result .= $this->annihilator->operationN();
+                            $result .= $this->annihilator2->operationZ();
+
+                            return $result;
+                        }
+                    }
+
+                    class Annihilator
+                    {
+                        public function operation1(): string
+                        {
+                            return "Annihilator Kommandant: Waffenabteilung, machen sie die Waffen startklar für das Feuergefecht, zwei Rebellenkreuzer nähern sich unserer Position!\n";
+                        }
+
+                        // ...
+
+                        public function operationN(): string
+                        {
+                            return "Annihilator Kommandant: Sie sind angekommen, feuern sie auf die Rebellenkreuzer!\n";
+                        }
+                    }
+
+                    class Annihilator2
+                    {
+                        public function operation1(): string
+                        {
+                            return "Annihilator Waffenabteilung: Verstanden! Waffen sind geladen und bereit für das Feuergefecht!\n";
+                        }
+
+                        // ...
+
+                        public function operationZ(): string
+                        {
+                            return "Annhilator Waffenabteilung: FEUER!\n";
+                        }
+                    }
+
+                    function clientCode(Facade $facade)
+                    {
+                        // ...
+
+                        echo $facade->operation();
+
+                        // ...
+                    }
+
+                    $annihilator = new Annihilator();
+                    $annihilator2 = new Annihilator2();
+                    $facade = new Facade($annihilator, $annihilator2);
+                    clientCode($facade);
+
+                    ?&gt;
+            	</code>
+            </pre>
+            <h3>Output</h3>
+            <pre>
+                <code>
+                    Imperium initialisiert Feuergefecht:
+                    Annihilator Kommandant: Waffenabteilung, machen sie die Waffen startklar für das Feuergefecht, zwei Rebellenkreuzer
+                    nähern sich unserer Position!
+                    Annihilator Waffenabteilung: Verstanden! Waffen sind geladen und bereit für das Feuergefecht!
+                    Imperium befiehlt zu feuern:
+                    Annihilator Kommandant: Sie sind angekommen, feuern sie auf die Rebellenkreuzer!
+                    Annhilator Waffenabteilung: FEUER!
+                </code>
+            </pre>
+            <a href="../downloads/index.php" download>Code downloaden</a>
+        </section>
+
+        <section>
+            <h2>Quellenangaben</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Datum</th>
+                        <th>Link</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Jedipedia</td>
+                        <td>2021-09-09</td>
+                        <td><a
+                                href="https://jedipedia.fandom.com/wiki/Ritter_von_Ren">https://jedipedia.fandom.com/wiki/Ritter_von_Ren</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Wikipedia</td>
+                        <td>2021-09-09</td>
+                        <td><a
+                                href="https://de.wikipedia.org/wiki/Fassade_(Entwurfsmuster)">https://de.wikipedia.org/wiki/Fassade_(Entwurfsmuster)</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Ionos</td>
+                        <td>2021-09-09</td>
+                        <td><a
+                                href="https://www.ionos.de/digitalguide/websites/web-entwicklung/was-ist-das-facade-pattern/">https://www.ionos.de/digitalguide/websites/web-entwicklung/was-ist-das-facade-pattern/</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Refactoring Guru</td>
+                        <td>2021-09-09</td>
+                        <td><a
+                                href="https://refactoring.guru/design-patterns/facade">https://refactoring.guru/design-patterns/facade</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+    </article>
+    <script src="../prism.js"></script>
+</body>
+
+</html>

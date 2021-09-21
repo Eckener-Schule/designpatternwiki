@@ -24,32 +24,165 @@
 				<ul>
 					<li>Der Aufruf einer Programmmethode wird beim Factory Pattern gänzlich von der Implementierung neuer Klassen separiert.</li>
 					<li>Factory-Instanzen besitzen ein hohes Maß an Eigenständigkeit und erlauben das Hinzufügen neuer Klassen, ohne dass sich die Applikation hierfür in irgendeiner Weise ändern muss – parallel zur Laufzeit.</li>
-					<li>Es bietet eine gute Testbarkeit der einzelnen Factory-Komponenten. Implementiert ein Creator beispielsweise drei Klassen, so lässt sich deren Funktionalität einzeln und unabhängig von der aufrufenden Klasse testen.</li>
+					<li>Es bietet eine gute Testbarkeit der einzelnen Factory-Komponenten. Implementiert ein 'Creator' beispielsweise drei Klassen, so lässt sich deren Funktionalität einzeln und unabhängig von der aufrufenden Klasse testen.</li>
 					<li>
-						Erweiterbarkeit, Austauschbarkeit und Flexibilität durch problemlose Einführung neuer Products und ConcreteCreators (bzw. Modifizierung oder Auswechseln bestehender) ohne Brechen des Clientcodes, dank konsistenter Schnittstelle. So kann ein neuer ConcreteCreator in das System integriert werden und dabei bestehenden Creatorcode wiederverwenden ohne das Änderungen am bestehenden Client nötig sind.
+						Erweiterbarkeit, Austauschbarkeit und Flexibilität durch problemlose Einführung neuer 'Products' und 'ConcreteCreators' (bzw. Modifizierung oder Auswechseln bestehender) ohne Brechen des Clientcodes, dank konsistenter Schnittstelle. So kann ein neuer 'ConcreteCreator' in das System integriert werden und dabei bestehenden 'Creatorcode' wiederverwenden ohne das Änderungen am bestehenden Client nötig sind.
 					</li>
 				</ul>
 				<h4>Nachteile</h4>
 				<ul>
-					<li>Enge Kopplung eines konkreten Creators an ein konkretes Produkt. Für jedes neue Produkt muss ein neuer ConcreteCreator geschrieben werden und den abstrakte Creator ableiten. Unser Gesamtsystem hat damit nur wegen der Fabrikmethode einen weiteren Evolutionsast. Bei der parametrisierten Variante des Patterns ist dies weniger problematisch, da oft nur ein bestehender konkreter Creator angepasst werden muss.</li>
+					<li>Enge Kopplung eines konkreten Creators an ein konkretes Produkt. Für jedes neue Produkt muss ein neuer 'ConcreteCreator' geschrieben werden und den abstrakten Creator ableiten. Unser Gesamtsystem hat damit nur wegen der Fabrikmethode einen weiteren Evolutionsast. Bei der parametrisierten Variante des Patterns ist dies weniger problematisch, da oft nur ein bestehender konkreter Creator angepasst werden muss.</li>
 				</ul>
-				<pre class="line-numbers">
-					<code class="language-php">
-						&lt;?php
-						phpinfo();
-						echo 'Hallo Moin';
-						?&gt;
+				<details>
+					<summary>Abstraktes Code-Beispiel (Auszug)</summary>
+						<pre class="line-numbers">
+							<code class="language-php">
+&lt;?php
+
+// abstract creator class
+abstract class Creator {
+
+	// get concrete product, doesn't know which one
+	abstract protected function factoryMethod();
+
+	public function operation(){
+
+		// return factoryMethod
+		return $this->factoryMethod();
+		}
+	}
+
+// interface 'product'
+interface Product {
+
+	public function show();
+	}
+
+// concrete class A
+class ConcreteCreatorA extends Creator {
+
+	// implement operation method
+	protected function factoryMethod(){
+
+		// return new instanciation of concreteProductA
+		return new ConcreteProductA();
+		}
+	}
+
+// concrete product A that implements the 'product' interface
+class ConcreteProductA implements Product {
+
+	// show product A
+	public function show(){
+
+		// print output
+		echo 'Ich bin ein konkretes Produkt A.<br />';
+		}
+	}
+
+// ## index file
+
+// autoload function
+define ('BASEPATH', realpath(dirname(__FILE__)));
+require_once (BASEPATH.DIRECTORY_SEPARATOR.DIRECTORY_SEPARATOR.'autoload.php');
+
+// instance new class
+$factoryA = new ConcreteCreatorA();
+$productA = $factoryA->operation();
+
+// execute show function
+$productA->show();
+?&gt;
 					</code>
 				</pre>
-				<a href="#">Code downloaden</a>
+		</details>
+			<a href="../downloads/factorymethod/abstract_code_example.rar">Code downloaden</a>
 			</section>
 
 			<section>
 				<h2>Konkrete Beschreibung</h2>
 				<p>
-					Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Nam liber tempor cum soluta nobis eleifend option congue nihil imperdiet doming id quod mazim placerat facer possim assum.
+				Das Factory method pattern lässt sich im Star Wars Universum z. B. für die Jedi anwenden. Normalerweise würde in der index.php direkt das Objekt (ein Jedi) instanziiert werden. Durch die Anwendung des Patterns wird die Funktion zum eigentlichen instanziieren in die Fabrikmethode ausgelagert. Für jeden Jedi wird eine Klasse (der konkrete Ersteller) erstellt, der von der abstrakten Klasse (Ersteller) erbt. Die Fabrikmethode wird nun vom jeweiligen konkreten Ersteller beim Aufruf der Fabrikmethode überschrieben und das Jedi Objekt, in diesem Fall 'Luke Skywalker', wird instanziiert. Die Schnittstelle 'Jedi' beinhaltet alle Methoden, die ein Jedi benötigt. Die Luke Skywalker Klasse implementiert lediglich diese Schnittstelle und definiert bei Instanziierung diese Methoden (Name, Lichtschwert und Größe).	
 				</p>
-				<a href="#">Code downloaden</a>
+				<details>
+					<summary>Konkretes Code-Beispiel (Auszug)</summary>
+						<pre class="line-numbers">
+							<code class="language-php">
+&lt;?php
+
+abstract class Creator {
+
+	// get concrete product, doesn't know which one
+	abstract protected function factoryMethod();
+
+	public function operation(){
+
+		// return factoryMethod
+		return $this->factoryMethod();
+		}
+	}
+
+interface Jedi {
+
+	public function show();
+
+	public function lightsaber();
+
+	public function size();
+	}
+
+class ConcreteCreatorLuke extends Creator {
+
+	// implement operation method
+	protected function factoryMethod(){
+
+		// return new instanciation of object 'Luke_skywalker'
+		return new Luke_skywalker();
+		}
+	}
+
+class Luke_skywalker implements Jedi {
+
+	// show product A
+	public function show(){
+
+		// print output
+		echo 'Ich bin Luke Skywalker und ich bin auch ein Jedi.<br />';
+		}
+
+	// lightsaber
+	public function lightsaber(){
+
+		// print lightsaber color
+		echo 'Ich habe ein blaues Lichtschwert';
+		}
+
+	public function size(){
+
+		// print age
+		echo ' und ich bin 1.72m groß.';
+		}
+
+	// 
+	}
+
+// autoload function
+define ('BASEPATH', realpath(dirname(__FILE__)));
+require_once (BASEPATH.DIRECTORY_SEPARATOR.DIRECTORY_SEPARATOR.'autoload.php');
+
+// A
+$factoryA = new ConcreteCreatorLuke();
+$luke = $factoryA->operation();
+
+$luke->show();
+$luke->lightsaber();
+$luke->size();
+
+?&gt;
+					</code>
+				</pre>
+		</details>
+			<a href="../downloads/factorymethod/starwars_example.rar">Star Wars Code-Beispiel downloaden</a>
 			</section>
 
 			<section>	
@@ -64,9 +197,9 @@
 						</thead>
 						<tbody>
 							<tr>
-								<td>Wikipedia</td>
-								<td>2021-07-30</td>
-								<td><a href="https://de.wikipedia.org/wiki/Fabrikmethode">https://de.wikipedia.org/wiki/Fabrikmethode</a></td>
+								<td>Programmer Help</td>
+								<td>2020-06-15</td>
+								<td><a href="https://de.wikipedia.org/wiki/Fabrikmethode">https://programmer.help/blogs/factory-method-pattern-of-php-design-pattern.html</a></td>
 							</tr>
 							<tr>
 								<td>Philipp Hauer</td>
@@ -85,5 +218,4 @@
 
 	<script src="../prism.js"></script>
 	</body>
-</html>
-	
+</html>	
