@@ -1,35 +1,50 @@
 <!DOCTYPE html>
 <html lang="de">
-  <head>
+<head>
     <meta charset="utf-8"/>
-    <link rel="stylesheet" href="prism.css" />
+    <link rel="stylesheet" href="prism.css"/>
     <title>Singleton Pattern</title>
-  </head>
-  <body>
-    <article>
+</head>
+<body>
+<article>
 
-      <h1>Singleton</h1>
-      <p>Autor: Maximilian Joksch</p>
+    <h1>Singleton</h1>
+    <p>Autor: Maximilian Joksch</p>
 
-      <section>
-	<img src="../img/singleton.svg" alt="singleton-picture" />
-      </section>
+    <section>
+        <img src="../img/singleton.svg" alt="singleton-picture"/>
+    </section>
 
-      <section>
-	<h2>Abstrakte Beschreibung</h2>
-	<h4>Vorteile</h4>
-	<ul>
-	  <li>Dies ist ein nicht so langer Text, um den Platz auszufüllen</li>
-	  <li>Dies ist ein nicht so langer Text, um den Platz auszufüllen</li>
-	  <li>Dies ist ein nicht so langer Text, um den Platz auszufüllen</li>
-	</ul>
-	<h4>Nachteile</h4>
-	<ul>
-	  <li>Dies ist ein nicht so langer Text, um den Platz auszufüllen</li>
-	  <li>Dies ist ein nicht so langer Text, um den Platz auszufüllen</li>
-	  <li>Dies ist ein nicht so langer Text, um den Platz auszufüllen</li>
-	</ul>
-	<pre class="line-numbers">
+    <section>
+        <h2>Abstrakte Beschreibung</h2>
+        <p>
+            Das Singleton Entwurfsmuster sorgt dafür, dass es von einer Klasse nur eine einzige Instanz gibt und diese
+            global zugänglich ist.
+        </p>
+        <p>
+            Damit es nur eine einzigartige Instanz gibt, muss eine Instanziierung durch den Client verhindert werden.
+            Dafür wird der Konstruktur privat deklariert. Nun kann einzig der Singletoncode selbst das Singleton
+            instanziieren.
+        </p>
+        <p>
+            Weiterhin definiert die Singletonklasse eine global verfügbare Methode, in der diese einzigartige
+            Singletoninstanz zurückgegeben wird. In Java wird dies mit den Modifiern public und static erreicht. Der
+            Singletoncode muss (in der Methode) sicherstellen, dass immer nur ein und dasselbe Objekte an den Client
+            gelangt. Die verschiedenen Varianten, dies zu realisieren, werden im Kapitel Variationen diskutiert.
+        </p>
+        <h4>Vorteile</h4>
+        <ul>
+            <li>Dies ist ein nicht so langer Text, um den Platz auszufüllen</li>
+            <li>Dies ist ein nicht so langer Text, um den Platz auszufüllen</li>
+            <li>Dies ist ein nicht so langer Text, um den Platz auszufüllen</li>
+        </ul>
+        <h4>Nachteile</h4>
+        <ul>
+            <li>Dies ist ein nicht so langer Text, um den Platz auszufüllen</li>
+            <li>Dies ist ein nicht so langer Text, um den Platz auszufüllen</li>
+            <li>Dies ist ein nicht so langer Text, um den Platz auszufüllen</li>
+        </ul>
+        <pre class="line-numbers">
 	  <code class="language-php">
 	    &lt;?php
 	    phpinfo();
@@ -37,52 +52,68 @@
 	    ?&gt;
 	  </code>
 	</pre>
-	<a href="#">Code downloaden</a>
-      </section>
+        <a href="#">Code downloaden</a>
+    </section>
 
-      <section>
-	<h2>Konkrete Beschreibung</h2>
-	<p>
-	  Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Nam liber tempor cum soluta nobis eleifend option congue nihil imperdiet doming id quod mazim placerat facer possim assum.
-	</p>
-	<a href="#">Code downloaden</a>
-      </section>
+    <section>
+        <h2>Konkrete Beschreibung</h2>
+        <p>
+            Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet
+            dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper
+            suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in
+            vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero et accumsan et
+            iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla
+            facilisi. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt
+            ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation
+            ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in
+            hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero et
+            accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait
+            nulla facilisi. Nam liber tempor cum soluta nobis eleifend option congue nihil imperdiet doming id quod
+            mazim placerat facer possim assum.
+        </p>
+        <a href="#">Code downloaden</a>
+    </section>
 
-      <section>	
-	<h5>Quellenangaben</h5>
-	<table>
-	  <thead>
-	    <tr>
-	      <th>Name</th>
-	      <th>Datum</th>
-	      <th>Link</th>
-	    </tr>
-	  </thead>
-	  <tbody>
-	    <tr>
-	      <td>Wikipedia</td>
-	      <td>2021-09-21</td>
-	      <td><a href="https://de.wikipedia.org/wiki/Singleton_(Entwurfsmuster)#:~:text=Das%20Singleton%20(selten%20auch%20Einzelst%C3%BCck,Klasse%20genau%20ein%20Objekt%20existiert.">https://de.wikipedia.org/wiki/Singleton_(Entwurfsmuster)#:~:text=Das%20Singleton%20(selten%20auch%20Einzelst%C3%BCck,Klasse%20genau%20ein%20Objekt%20existiert.</a></td>
-	    </tr>
-	    <tr>
-	      <td>Philipp Hauer</td>
-	      <td>2021-09-21</td>
-	      <td><a href="https://www.philipphauer.de/study/se/design-pattern/singleton.php">https://www.philipphauer.de/study/se/design-pattern/singleton.php</a></td>
-	    </tr>
-	    <tr>
-	      <td>Ionos</td>
-	      <td>2021-09-21</td>
-	      <td><a href="https://www.ionos.de/digitalguide/websites/web-entwicklung/was-ist-das-singleton-pattern/">https://www.ionos.de/digitalguide/websites/web-entwicklung/was-ist-das-singleton-pattern/</a></td>
-	    </tr>
-		<tr>
-			<td>Refactoring Guru</td>
-			<td>2021-09-21</td>
-			<td><a href="https://refactoring.guru/design-patterns/singleton">https://refactoring.guru/design-patterns/singleton</a></td>
-		</tr>
-	  </tbody>
-	</table>
-      </section>
-    </article>
-    <script src="prism.js"></script>
-  </body>
+    <section>
+        <h5>Quellenangaben</h5>
+        <table>
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Datum</th>
+                <th>Link</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>Wikipedia</td>
+                <td>2021-09-21</td>
+                <td>
+                    <a href="https://de.wikipedia.org/wiki/Singleton_(Entwurfsmuster)#:~:text=Das%20Singleton%20(selten%20auch%20Einzelst%C3%BCck,Klasse%20genau%20ein%20Objekt%20existiert.">https://de.wikipedia.org/wiki/Singleton_(Entwurfsmuster)#:~:text=Das%20Singleton%20(selten%20auch%20Einzelst%C3%BCck,Klasse%20genau%20ein%20Objekt%20existiert.</a>
+                </td>
+            </tr>
+            <tr>
+                <td>Philipp Hauer</td>
+                <td>2021-09-21</td>
+                <td><a href="https://www.philipphauer.de/study/se/design-pattern/singleton.php">https://www.philipphauer.de/study/se/design-pattern/singleton.php</a>
+                </td>
+            </tr>
+            <tr>
+                <td>Ionos</td>
+                <td>2021-09-21</td>
+                <td><a href="https://www.ionos.de/digitalguide/websites/web-entwicklung/was-ist-das-singleton-pattern/">https://www.ionos.de/digitalguide/websites/web-entwicklung/was-ist-das-singleton-pattern/</a>
+                </td>
+            </tr>
+            <tr>
+                <td>Refactoring Guru</td>
+                <td>2021-09-21</td>
+                <td><a href="https://refactoring.guru/design-patterns/singleton">https://refactoring.guru/design-patterns/singleton</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </section>
+</article>
+<script src="prism.js"></script>
+</body>
 </html>
