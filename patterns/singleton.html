@@ -18,7 +18,8 @@
     <section>
         <h2>Abstrakte Beschreibung</h2>
         <p>
-            Das Singleton Entwurfsmuster sorgt dafür, dass es von einer Klasse nur eine einzige Instanz gibt und diese
+            Das Singleton (deutsch = Einzelstück) Entwurfsmuster sorgt dafür, dass es von einer Klasse nur eine einzige
+            Instanz gibt und diese
             global zugänglich ist.
         </p>
         <p>
@@ -137,19 +138,93 @@
     <section>
         <h2>Konkrete Beschreibung</h2>
         <p>
-            Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet
-            dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper
-            suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in
-            vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero et accumsan et
-            iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla
-            facilisi. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt
-            ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation
-            ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in
-            hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero et
-            accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait
-            nulla facilisi. Nam liber tempor cum soluta nobis eleifend option congue nihil imperdiet doming id quod
-            mazim placerat facer possim assum.
+            Im Star Wars Universum gibt es eine einheitliche Währung, welche Credit genannt wird. Die Credits werden
+            über ein zentrales Bankensystem verwaltet. In diesem System soll es nur eine einzige Instanz Bankwerte
+            geben, über die alle Informationen abgerufen werden können. Es bedarf einem Mechanismus, welche die Werte
+            bereitstellt und den Zugriff auf diese kontrolliert. Um das bestehende Bankverwaltungsprogramm nicht
+            komplett neu entwerfen zu müssen, soll auch dieser Mechanismus global verfügbar sein. Vernünftig ist dies
+            zwar nicht (siehe Nachteile), aber hinsichtlich der beschriebenen Punkte zielführend.
+
+            Es wird eine Klasse erstellt, deren Objekte die Variablen zugriffsgeschützt hält und den Zugriff mittels
+            Getter und Setter kontrolliert. Da die Daten zentral verwaltet werden sollen, und damit nicht mehrere
+            Objekte verschiedene Werte tragen dürfen, soll nur ein Objekt auf einmal instanziiert werden können. Es soll
+            ein Einzelstück sein.
+
+            Dazu wird der Konstruktor privatisiert, sodass er nur noch im BankWerte-Code selbst aufgerufen werden kann.
+            Der Konstruktoraufruf erfolgt statisch zur Zeit des Klassenladens.
         </p>
+        <pre class="line-numbers">
+          <code class="language-php">
+            &lt;?php
+
+            class Bankwerte
+            {
+                private static $instances = [];
+
+                private kontenZinsen = 0.0;
+                private kontenTransaktionsvolumen = 1000;
+                private kontenGebuehren = 10;
+                private kontenDispositionskredit = -500;
+
+                protected function __construct() { }
+
+                protected function __clone() { }
+
+                public function __wakeup()
+                {
+                    throw new \Exception("Cannot unserialize a singleton.");
+                }
+
+
+                public static function getInstance(): Bankwerte
+                {
+                    $cls = static::class;
+                    if (!isset(self::$instances[$cls])) {
+                        self::$instances[$cls] = new static();
+                    }
+
+                    return self::$instances[$cls];
+                }
+
+                private function berechneBilanz() {
+                    bilanz = 0;
+                    //TEURE Methode
+                    //...
+                    return bilanz;
+                }
+
+                //Setter mit Plausiblitätsprüfung
+                public setKontenZinsen(double kontenZinsen) {
+                    if (kontenZinsen > 0 && kontenZinsen < 4){
+                        kontenZinsen = pKontenZinsen;
+                    }
+                }
+
+                public setKontenGebuehren(int kontenGebuehren) {
+                    if (kontenGebuehren > 0 && kontenGebuehren < 50){
+                        kontenGebuehren = pKontenGebuehren;
+                    }
+                }
+            }
+
+            /**
+             * The client code.
+             */
+            function clientCode()
+            {
+                $s1 = Singleton::getInstance();
+                $s2 = Singleton::getInstance();
+                if ($s1 === $s2) {
+                    echo "Singleton works, both variables contain the same instance.";
+                } else {
+                    echo "Singleton failed, variables contain different instances.";
+                }
+            }
+
+            clientCode();
+            ?>
+          </code>
+        </pre>
         <a href="#">Code downloaden</a>
     </section>
 

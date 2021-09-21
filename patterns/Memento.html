@@ -24,6 +24,10 @@
 
 			<section>
 				<h2>Abstrakte Beschreibung</h2>
+				<p>Das Memento Design Pattern verwendet 3 Akteure.</p>
+				<p>Der Originator ist unser Objekt, dessen Zustand wir speichern und später neu laden wollen.
+				Das Memento ist der gespeicherte Zustand des Originator, dass wir später wieder in den Originator laden wollen, 
+				um diesen auf den alten Stand zurückzusetzen. Der Handhaber kann von extern das speichern und laden des Originators anstoßen.</p>
 				<h4>Vorteile</h4>
 				<ul>
 					<li>Der interne Zustand eines Objekts kann extern gespeichert werden, ohne die Kapselung zu verletzen. </li>
@@ -46,7 +50,18 @@
 			<section>
 				<h2>Konkrete Beschreibung</h2>
 				<p>
-					Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Nam liber tempor cum soluta nobis eleifend option congue nihil imperdiet doming id quod mazim placerat facer possim assum.
+					Jetzt kommen wir mal zu einem konkreten Beispiel. In Star Wars waren Droiden bekanntlicherweise sehr beliebt, 
+					jedoch waren sie auch große Sicherheitslücken, falls sie gefangen genommen wurden. 
+					Während man einen Soldaten meißt foltern musste, um wichtige Informationen aus ihm raus zu bekommen, 
+					konnte man einen Droiden einfach hacken und auslesen.
+				</p>
+				<p>
+					Da dieses Problem sehr bekannt war, hatten Droiden eine eingebaute Funktion um auf frühere Zustände zurückgesetzt zu werden.
+					Diese wurden besonders von der Republik während der Klonkriege vor jeder Mission gemacht, 
+					um zu verhindern das wichtige Informationen in die Hände der Konföderation fallen.
+				</p>
+				<p>
+					Für dieses Beispiel ist unser Droide unser Originator, der zu ladende Speicherstand ein Memento und die Klone sind Handhaber. 
 				</p>
 				<pre class="line-numbers">
 					<code class="language-php">
@@ -75,11 +90,25 @@
 								<td>2021-09-09</td>
 								<td><a href="https://www.gofpatterns.com/behavioral/patterns/memento-pattern.php">https://www.gofpatterns.com/behavioral/patterns/memento-pattern.php</a></td>
 							</tr>
-
 							<tr>
-								<td>Ionos</td>
-								<td>2021-08-26</td>
-								<td><a href="https://www.ionos.de/digitalguide/websites/web-entwicklung/was-ist-das-factory-pattern/">https://www.ionos.de/digitalguide/websites/web-entwicklung/was-ist-das-factory-pattern/</a></td>
+								<td>Wikipedia</td>
+								<td>2021-09-21</td>
+								<td><a href="https://de.wikipedia.org/wiki/Memento_(Entwurfsmuster)">https://de.wikipedia.org/wiki/Memento_(Entwurfsmuster)</a></td>
+							</tr>
+							<tr>
+								<td>Wikipedia</td>
+								<td>2021-09-21</td>
+								<td><a href="https://en.wikipedia.org/wiki/Memento_pattern">https://en.wikipedia.org/wiki/Memento_pattern</a></td>
+							</tr>
+							<tr>
+								<td>Wookieepedia</td>
+								<td>2021-09-21</td>
+								<td><a href="https://starwars.fandom.com/wiki/Memory_wipe">https://starwars.fandom.com/wiki/Memory_wipe</a></td>
+							</tr>
+							<tr>
+								<td>Baeldung</td>
+								<td>2021-09-21</td>
+								<td><a href="https://www.baeldung.com/java-memento-design-pattern">https://www.baeldung.com/java-memento-design-pattern</a></td>
 							</tr>
 						</tbody>
 					</table>
