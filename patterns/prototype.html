@@ -3,38 +3,117 @@
 	<head>
 		<meta charset="utf-8"/>
 		<link rel="stylesheet" href="../prism.css" />
-		<title>Prototype Method</title>
+		<title>Prototyp</title>
 	</head>
 	<body>
 		<article>
 
-			<h1>Prototype Method</h1>
-			<p>Autor:IT-B2-19</p>
+			<h1>Prototyp</h1>
+			<p>Autor: Marius Mumm</p>
 
 			<section>
-				<img src="../img/prototype.png" alt="prototype-method-picture" />
+				<img src="../img/prototype.png" alt="prototyp-pattern-picture" />
 			</section>
 
 			<section>
 				<h2>Abstrakte Beschreibung</h2>
+				<p>
+
+				</p>
 				<h4>Vorteile</h4>
 				<ul>
-					<li>Dies ist ein nicht so langer Text, um den Platz auszufüllen</li>
-					<li>Dies ist ein nicht so langer Text, um den Platz auszufüllen</li>
-					<li>Dies ist ein nicht so langer Text, um den Platz auszufüllen</li>
+					<li>komplexe Objekte mit vielen Attributen können einfacher erzeugt werden</li>
+					<li>Objekte können unabhängig von ihrer Klasse erstellt werden</li>
+					<li>neue Prototypen können während der Laufzeit hinzugefügt oder entfernt werden</li>
 				</ul>
 				<h4>Nachteile</h4>
 				<ul>
-					<li>Dies ist ein nicht so langer Text, um den Platz auszufüllen</li>
-					<li>Dies ist ein nicht so langer Text, um den Platz auszufüllen</li>
-					<li>Dies ist ein nicht so langer Text, um den Platz auszufüllen</li>
+					<li>jede referenzierte Unterklasse muss eine clone()-Methode implementieren</li>
+					<li>je nach Programmiersprache können komplexe Referenzierungen zu Schwierigkeiten führen</li>
 				</ul>
 				<pre class="line-numbers">
 					<code class="language-php">
-						&lt;?php
-						phpinfo();
-						echo 'Hallo Moin';
-						?&gt;
+&lt;?php
+
+// The example class that has cloning ability. We'll see how the values of field
+// with different types will be cloned.
+
+class Prototype
+{
+	public $primitive;
+	public $component;
+	public $circularReference;
+
+	// PHP has built-in cloning support. You can 'clone' an object without
+	// defining any special methods as long as it has fields of primitive types.
+	// Fields containing objects retain their references in a cloned object.
+	// Therefore, in some cases, you might want to clone those referenced
+	// objects as well. You can do this in a special '__clone()' method.
+
+	public function __clone()
+	{
+		$this->component = clone $this->component;
+
+		// Cloning an object that has a nested object with backreference
+		// requires special treatment. After the cloning is completed, the
+		// nested object should point to the cloned object, instead of the
+		// original object.
+
+		$this->circularReference = clone $this->circularReference;
+		$this->circularReference->prototype = $this;
+	}
+}
+
+class ComponentWithBackReference
+{
+	public $prototype;
+
+	// Note that the constructor won't be executed during cloning. If you have
+	// complex logic inside the constructor, you may need to execute it in the
+	// '__clone' method as well.
+
+	public function __construct(Prototype $prototype)
+	{
+		$this->prototype = $prototype;
+	}
+}
+
+
+// The client code.
+
+function clientCode()
+{
+	$p1 = new Prototype();
+	$p1->primitive = 245;
+	$p1->component = new \DateTime();
+	$p1->circularReference = new ComponentWithBackReference($p1);
+
+	$p2 = clone $p1;
+	if ($p1->primitive === $p2->primitive) {
+		echo "Primitive field values have been carried over to a clone. Yay!\n";
+	} else {
+		echo "Primitive field values have not been copied. Booo!\n";
+	}
+	if ($p1->component === $p2->component) {
+		echo "Simple component has not been cloned. Booo!\n";
+	} else {
+		echo "Simple component has been cloned. Yay!\n";
+	}
+
+	if ($p1->circularReference === $p2->circularReference) {
+		echo "Component with back reference has not been cloned. Booo!\n";
+	} else {
+		echo "Component with back reference has been cloned. Yay!\n";
+	}
+
+	if ($p1->circularReference->prototype === $p2->circularReference->prototype) {
+		echo "Component with back reference is linked to original object. Booo!\n";
+	} else {
+		echo "Component with back reference is linked to the clone. Yay!\n";
+	}
+}
+clientCode();
+?&gt;
 					</code>
 				</pre>
 				<a href="#">Code downloaden</a>
@@ -60,19 +139,19 @@
 						</thead>
 						<tbody>
 							<tr>
-								<td>Wikipedia</td>
-								<td>2021-07-30</td>
-								<td><a href="https://de.wikipedia.org/wiki/Fabrikmethode">https://de.wikipedia.org/wiki/Fabrikmethode</a></td>
+								<td>Alexander Shvets</td>
+								<td>2021-09-14</td>
+								<td><a href="https://refactoring.guru/design-patterns/prototype">https://refactoring.guru/design-patterns/prototype</a></td>
 							</tr>
 							<tr>
-								<td>Philipp Hauer</td>
-								<td>2021-08-26</td>
-								<td><a href="https://www.philipphauer.de/study/se/design-pattern/factory-method.php">https://www.philipphauer.de/study/se/design-pattern/factory-method.php</a></td>
+								<td>GeeksforGeeks</td>
+								<td>2021-09-14</td>
+								<td><a href="https://www.geeksforgeeks.org/prototype-design-pattern/">https://www.geeksforgeeks.org/prototype-design-pattern/</a></td>
 							</tr>
 							<tr>
-								<td>Ionos</td>
-								<td>2021-08-26</td>
-								<td><a href="https://www.ionos.de/digitalguide/websites/web-entwicklung/was-ist-das-factory-pattern/">https://www.ionos.de/digitalguide/websites/web-entwicklung/was-ist-das-factory-pattern/</a></td>
+								<td>SourceMaking</td>
+								<td>2021-09-14</td>
+								<td><a href="https://sourcemaking.com/design_patterns/prototype">https://sourcemaking.com/design_patterns/prototype</a></td>
 							</tr>
 						</tbody>
 					</table>

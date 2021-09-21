@@ -2,7 +2,7 @@
 <html lang="de">
 <head>
     <meta charset="utf-8"/>
-    <link rel="stylesheet" href="prism.css"/>
+    <link rel="stylesheet" href="../prism.css"/>
     <title>Singleton Pattern</title>
 </head>
 <body>
@@ -34,24 +34,103 @@
         </p>
         <h4>Vorteile</h4>
         <ul>
-            <li>Dies ist ein nicht so langer Text, um den Platz auszufüllen</li>
-            <li>Dies ist ein nicht so langer Text, um den Platz auszufüllen</li>
-            <li>Dies ist ein nicht so langer Text, um den Platz auszufüllen</li>
+            <li>Man kann sich sicher sein, dass eine Klasse nur eine Instanz hat.</li>
+            <li>Man hat eine globale Zugriffs-Schnittstelle.</li>
+            <li>Das Singleton Objekt wird nur initalisiert, wenn es gebraucht wird.</li>
         </ul>
         <h4>Nachteile</h4>
         <ul>
-            <li>Dies ist ein nicht so langer Text, um den Platz auszufüllen</li>
-            <li>Dies ist ein nicht so langer Text, um den Platz auszufüllen</li>
-            <li>Dies ist ein nicht so langer Text, um den Platz auszufüllen</li>
+            <li>Verletzt das Prinzip, dass eine Klasse nur eine Aufgabe erfüllen soll.</li>
+            <li>Das Singleton Pattern kann schlechtes Design verstecken.</li>
+            <li>In einer multithreaded Umgebung benötigt das Singleton eine Absicherung, dass es nicht von mehreren
+                Threads gleichzeitig instanziiert wird.
+            </li>
         </ul>
         <pre class="line-numbers">
-	  <code class="language-php">
-	    &lt;?php
-	    phpinfo();
-	    echo 'Hallo Moin';
-	    ?&gt;
-	  </code>
-	</pre>
+          <code class="language-php">
+            &lt;?php
+
+            /**
+             * The Singleton class defines the `GetInstance` method that serves as an
+             * alternative to constructor and lets clients access the same instance of this
+             * class over and over.
+             */
+            class Singleton
+            {
+                /**
+                 * The Singleton's instance is stored in a static field. This field is an
+                 * array, because we'll allow our Singleton to have subclasses. Each item in
+                 * this array will be an instance of a specific Singleton's subclass. You'll
+                 * see how this works in a moment.
+                 */
+                private static $instances = [];
+
+                /**
+                 * The Singleton's constructor should always be private to prevent direct
+                 * construction calls with the `new` operator.
+                 */
+                protected function __construct() { }
+
+                /**
+                 * Singletons should not be cloneable.
+                 */
+                protected function __clone() { }
+
+                /**
+                 * Singletons should not be restorable from strings.
+                 */
+                public function __wakeup()
+                {
+                    throw new \Exception("Cannot unserialize a singleton.");
+                }
+
+                /**
+                 * This is the static method that controls the access to the singleton
+                 * instance. On the first run, it creates a singleton object and places it
+                 * into the static field. On subsequent runs, it returns the client existing
+                 * object stored in the static field.
+                 *
+                 * This implementation lets you subclass the Singleton class while keeping
+                 * just one instance of each subclass around.
+                 */
+                public static function getInstance(): Singleton
+                {
+                    $cls = static::class;
+                    if (!isset(self::$instances[$cls])) {
+                        self::$instances[$cls] = new static();
+                    }
+
+                    return self::$instances[$cls];
+                }
+
+                /**
+                 * Finally, any singleton should define some business logic, which can be
+                 * executed on its instance.
+                 */
+                public function someBusinessLogic()
+                {
+                    // ...
+                }
+            }
+
+            /**
+             * The client code.
+             */
+            function clientCode()
+            {
+                $s1 = Singleton::getInstance();
+                $s2 = Singleton::getInstance();
+                if ($s1 === $s2) {
+                    echo "Singleton works, both variables contain the same instance.";
+                } else {
+                    echo "Singleton failed, variables contain different instances.";
+                }
+            }
+
+            clientCode();
+            ?>
+          </code>
+        </pre>
         <a href="#">Code downloaden</a>
     </section>
 
@@ -114,6 +193,6 @@
         </table>
     </section>
 </article>
-<script src="prism.js"></script>
+<script src="../prism.js"></script>
 </body>
 </html>

@@ -99,6 +99,92 @@ $productA->show();
 			<a href="../downloads/factorymethod/abstract_code_example.rar">Code downloaden</a>
 			</section>
 
+			<section>
+				<h2>Konkrete Beschreibung</h2>
+				<p>
+				Das Factory method pattern lässt sich im Star Wars Universum z. B. für die Jedi anwenden. Normalerweise würde in der index.php direkt das Objekt (ein Jedi) instanziiert werden. Durch die Anwendung des Patterns wird die Funktion zum eigentlichen instanziieren in die Fabrikmethode ausgelagert. Für jeden Jedi wird eine Klasse (der konkrete Ersteller) erstellt, der von der abstrakten Klasse (Ersteller) erbt. Die Fabrikmethode wird nun vom jeweiligen konkreten Ersteller beim Aufruf der Fabrikmethode überschrieben und das Jedi Objekt, in diesem Fall 'Luke Skywalker', wird instanziiert. Die Schnittstelle 'Jedi' beinhaltet alle Methoden, die ein Jedi benötigt. Die Luke Skywalker Klasse implementiert lediglich diese Schnittstelle und definiert bei Instanziierung diese Methoden (Name, Lichtschwert und Größe).	
+				</p>
+				<details>
+					<summary>Konkretes Code-Beispiel (Auszug)</summary>
+						<pre class="line-numbers">
+							<code class="language-php">
+&lt;?php
+
+abstract class Creator {
+
+	// get concrete product, doesn't know which one
+	abstract protected function factoryMethod();
+
+	public function operation(){
+
+		// return factoryMethod
+		return $this->factoryMethod();
+		}
+	}
+
+interface Jedi {
+
+	public function show();
+
+	public function lightsaber();
+
+	public function size();
+	}
+
+class ConcreteCreatorLuke extends Creator {
+
+	// implement operation method
+	protected function factoryMethod(){
+
+		// return new instanciation of object 'Luke_skywalker'
+		return new Luke_skywalker();
+		}
+	}
+
+class Luke_skywalker implements Jedi {
+
+	// show product A
+	public function show(){
+
+		// print output
+		echo 'Ich bin Luke Skywalker und ich bin auch ein Jedi.<br />';
+		}
+
+	// lightsaber
+	public function lightsaber(){
+
+		// print lightsaber color
+		echo 'Ich habe ein blaues Lichtschwert';
+		}
+
+	public function size(){
+
+		// print age
+		echo ' und ich bin 1.72m groß.';
+		}
+
+	// 
+	}
+
+// autoload function
+define ('BASEPATH', realpath(dirname(__FILE__)));
+require_once (BASEPATH.DIRECTORY_SEPARATOR.DIRECTORY_SEPARATOR.'autoload.php');
+
+// A
+$factoryA = new ConcreteCreatorLuke();
+$luke = $factoryA->operation();
+
+$luke->show();
+$luke->lightsaber();
+$luke->size();
+
+?&gt;
+					</code>
+				</pre>
+		</details>
+			<a href="../downloads/factorymethod/starwars_example.rar">Star Wars Code-Beispiel downloaden</a>
+			</section>
+
 			<section>	
 				<h5>Quellenangaben</h5>
 					<table>
